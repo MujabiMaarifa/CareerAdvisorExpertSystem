@@ -29,6 +29,8 @@ class CareerAdvisor:
         qualified = set()
         for res in self.prolog.query("strongly_qualified(Career)"):
             qualified.add(res["Career"])
+        for res in self.prolog.query("qualified(Career)"):
+            qualified_set.add(res["Career"])
         return list(qualified)
 
     # Backward chaining
@@ -43,9 +45,10 @@ class CareerAdvisor:
     # Hybrid
     def hybrid_recommendation(self):
         potential = set()
-        for res in prolog.query(f"strongly_qualified(Career)"):
+        for res in prolog.query("strongly_qualified(Career)"):
             potential.add(res["Career"])
-        
+        for res in prolog.query("qualified(Career)"):
+            potential.add(res["Career"])
         final = []
         for career in potential:
             if self.backward_chaining(career):

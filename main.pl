@@ -1,5 +1,11 @@
-/*Domain facts*/
-
+/*dynamic facts*/
+:- dynamic inferred_qualified/1.
+:- dynamic qualified/1.
+%dynamicUserFacts
+:- dynamic has_skill/1.
+:- dynamic has_interest/1.
+:- dynamic has_trait/1.
+:- dynamic has_education/1.
 /* ---- Careers ---- */
 %career(_)
 
@@ -100,12 +106,6 @@ requires(teacher, critical_thinking).
 requires(teacher, logical).
 requires(teacher, teaching_explaining).
 
-%dynamicUserFacts
-:- dynamic has_skill/1.
-:- dynamic has_interest/1.
-:- dynamic has_trait/1.
-:- dynamic has_education/1.
-
 %inferenceRules
 /* User qualifies for a skill-based career */
 qualified(Career) :-
@@ -177,7 +177,10 @@ infer_qualified :-
     \+ inferred_qualified(C),
     assertz(inferred_qualified(C)).
 
-:- dynamic inferred_qualified/1.
+forward_recommendation(Career, Score) :-
+    score(Career, Score),
+    Score > 0.
+
 
 /* priority assigning->requires(C)- is assigned priority if the rules might be triggered at the same time */
 score(Career, Score) :- 
