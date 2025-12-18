@@ -7,7 +7,7 @@ class CareerAdvisor:
         self.prolog.consult(kb_file)
 
     #clear the user skills to avoid conflicts 
-     def clear_user_facts(self):
+    def clear_user_facts(self):
         self.prolog.retractall("has_skill(_)") 
         self.prolog.retractall("has_trait(_)") 
         self.prolog.retractall("has_interest(_)") 
