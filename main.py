@@ -8,13 +8,13 @@ class CareerAdvisor:
 
     #clear the user skills to avoid conflicts 
      def clear_user_facts(self):
-        self.prolog.retractall("has_skill(_)") 
+         self.prolog.retractall("has_skill(_)") 
         self.prolog.retractall("has_trait(_)") 
         self.prolog.retractall("has_interest(_)") 
         self.prolog.retractall("has_education(_)")
 
     #set user's profile
-    
+
     def set_user_skills(self, skills):
         self.clear_user_facts()
         for skill in skills:
