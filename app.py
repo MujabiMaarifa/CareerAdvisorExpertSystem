@@ -11,32 +11,32 @@ advisor = CareerAdvisor()
 #sidebar contents -> displays the FOL reasoning
 st.sidebar.header("⚙ Reasoning Method")
 reasoning_method = st.sidebar.radio(
-    "Choose reasoning method:",
-    ["Forward Chaining", "Backward Chaining", "Hybrid(both)"]
-)
+        "Choose reasoning method:",
+        ["Forward Chaining", "Backward Chaining", "Hybrid(both)"]
+        )
 
 st.header("👤 Enter your profile")
 
 #user input -> from given options
 skills = st.multiselect(
-    "Select your skills:",
-    ["programming", "problem_solving", "statistics", "communication", "subject_knowledge", "medical_knowldege", "teaching_explaining", "drawing"]
-)
+        "Select your skills:",
+        ["programming", "problem_solving", "statistics", "communication", "subject_knowledge", "medical_knowldege", "teaching_explaining", "drawing"]
+        )
 
 traits = st.multiselect(
-    "Select your personality traits:",
-    ["logical", "analytical", "patient", "caring", "teaching", "critical_thinking"]
-)
+        "Select your personality traits:",
+        ["logical", "analytical", "patient", "caring", "teaching", "critical_thinking"]
+        )
 
 interests = st.multiselect(
-    "Select your interests:",
-    ["technology", "data_analysis", "education", "patient_care", "house_planning"]
-)
+        "Select your interests:",
+        ["technology", "data_analysis", "education", "patient_care", "house_planning"]
+        )
 
 education = st.selectbox(
-    "Select your education level:",
-    ["diploma", "bachelors", "masters", "phd"]
-)
+        "Select your education level:",
+        ["diploma", "bachelors", "masters", "phd"]
+        )
 
 #set user profile based on the selected user's input
 advisor.clear_user_facts()
