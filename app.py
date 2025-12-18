@@ -47,7 +47,6 @@ advisor.set_user_education(education)
 
 #implement the expert system to reason and recommend career to user
 if st.button("🔍 Get Career Recommendation"):
-
     if reasoning_method == "Forward Chaining":
         recommended = advisor.forward_chaining()
         method_used = "Forward Chaining"

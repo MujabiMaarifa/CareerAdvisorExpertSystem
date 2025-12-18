@@ -2,9 +2,10 @@ from pyswip import Prolog
 
 class CareerAdvisor:
     #class constructor to initialize user object
-    def __init__(self, kb_file="main.pl"):
+    def __init__(self):
         self.prolog = Prolog()
-        self.prolog.consult(kb_file)
+        self.prolog.consult("main.pl")
+        # Backward chaining requires a career goal; ask user to select
 
     #clear the user skills to avoid conflicts 
     def clear_user_facts(self):
@@ -26,12 +27,10 @@ class CareerAdvisor:
             self.prolog.assertz(f"has_trait({trait})")
 
     def set_user_interests(self, interests):
-        self.clear_user_facts()
         for interest in interests:
             self.prolog.assertz(f"has_interest({interest})")
 
     def set_user_education(self, education):
-        self.clear_user_facts()
         self.prolog.assertz(f"has_education({education})")
 
     #function to apply forward chaining 
