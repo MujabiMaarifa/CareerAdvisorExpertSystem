@@ -20,17 +20,17 @@ st.header("👤 Enter your profile")
 #user input -> from given options
 skills = st.multiselect(
         "Select your skills:",
-        ["programming", "problem_solving", "statistics", "communication", "subject_knowledge", "medical_knowldege", "teaching_explaining", "drawing"]
+        ["programming", "problem_solving", "statistics", "communication", "medical_knowldege", "teaching_explaining", "drawing"]
         )
 
 traits = st.multiselect(
         "Select your personality traits:",
-        ["logical", "analytical", "patient", "caring", "teaching", "critical_thinking"]
+        ["logical", "analytical", "curious", "caring", "creative", "detailed_oriented"]
         )
 
 interests = st.multiselect(
         "Select your interests:",
-        ["technology", "data_analysis", "education", "patient_care", "house_planning"]
+        ["technology", "data_analysis", "research", "design", "networks", "security", "teaching", "house_planning", "patient_care"]
         )
 
 education = st.selectbox(
@@ -40,10 +40,12 @@ education = st.selectbox(
 
 #set user profile based on the selected user's input
 advisor.clear_user_facts()
-advisor.set_user_skills(skills)
-advisor.set_user_traits(traits)
-advisor.set_user_interests(interests)
-advisor.set_user_education(education)
+advisor.set_user_profile(
+    skills=skills,
+    traits=traits,
+    interests=interests,
+    education=education
+)
 
 #implement the expert system to reason and recommend career to user
 if st.button("🔍 Get Career Recommendation"):

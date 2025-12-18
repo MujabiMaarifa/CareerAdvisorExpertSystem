@@ -1,60 +1,53 @@
 from pyswip import Prolog
 
 class CareerAdvisor:
-    #class constructor to initialize user object
-    def __init__(self):
+    def __init__(self, kb_file="main.pl"):
         self.prolog = Prolog()
-        self.prolog.consult("main.pl")
-        # Backward chaining requires a career goal; ask user to select
+        self.prolog.consult(kb_file)
 
-    #clear the user skills to avoid conflicts 
+    # clear all user facts at once
     def clear_user_facts(self):
         self.prolog.retractall("has_skill(_)") 
         self.prolog.retractall("has_trait(_)") 
         self.prolog.retractall("has_interest(_)") 
         self.prolog.retractall("has_education(_)")
 
-    #set user's profile
-
-    def set_user_skills(self, skills):
+    def set_user_profile(self, skills=[], traits=[], interests=[], education=None):
         self.clear_user_facts()
         for skill in skills:
             self.prolog.assertz(f"has_skill({skill})")
-
-    def set_user_traits(self, traits):
-        self.clear_user_facts()
         for trait in traits:
             self.prolog.assertz(f"has_trait({trait})")
-
-    def set_user_interests(self, interests):
         for interest in interests:
             self.prolog.assertz(f"has_interest({interest})")
+        if education:
+            self.prolog.assertz(f"has_education({education})")
 
-    def set_user_education(self, education):
-        self.prolog.assertz(f"has_education({education})")
 
-    #function to apply forward chaining 
+    # Forward chaining: career requires all skills
     def forward_chaining(self):
         qualified = set()
-        for res in self.prolog.query("requires(Career, Skill), has_skill(Skill)"):
+        for res in self.prolog.query("strongly_qualified(Career)"):
             qualified.add(res["Career"])
         return list(qualified)
 
-    #function to apply backward chaining
+    # Backward chaining
     def backward_chaining(self, career):
         try:
-            query = f"recommend({career})"
-            result = list(self.prolog.query(query))
+            result = list(self.prolog.query(f"recommend({career})"))
             return bool(result)
         except Exception as e:
             print(f"Backward chaining error {career}: {e}")
+            return False
 
-    # hybrid implementation
+    # Hybrid
     def hybrid_recommendation(self):
-        potential = self.forward_chaining()
-        final_recommend = []
+        potential = set()
+        for res in prolog.query(f"strongly_qualified(Career)"):
+            potential.add(res["Career"])
+        
+        final = []
         for career in potential:
             if self.backward_chaining(career):
-                final_recommend.append(career)
-        return final_recommend
-
+                final.append(career)
+        return final
