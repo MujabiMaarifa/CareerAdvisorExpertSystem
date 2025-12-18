@@ -30,7 +30,7 @@ class CareerAdvisor:
         for res in self.prolog.query("strongly_qualified(Career)"):
             qualified.add(res["Career"])
         for res in self.prolog.query("qualified(Career)"):
-            qualified_set.add(res["Career"])
+            qualified.add(res["Career"])
         return list(qualified)
 
     # Backward chaining
