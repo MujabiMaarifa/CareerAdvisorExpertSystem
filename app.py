@@ -39,6 +39,7 @@ education = st.selectbox(
 )
 
 #set user profile based on the selected user's input
+advisor.clear_user_facts()
 advisor.set_user_skills(skills)
 advisor.set_user_traits(traits)
 advisor.set_user_interests(interests)

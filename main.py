@@ -6,21 +6,32 @@ class CareerAdvisor:
         self.prolog = Prolog()
         self.prolog.consult(kb_file)
 
+    #clear the user skills to avoid conflicts 
+     def clear_user_facts(self):
+        self.prolog.retractall("has_skill(_)") 
+        self.prolog.retractall("has_trait(_)") 
+        self.prolog.retractall("has_interest(_)") 
+        self.prolog.retractall("has_education(_)")
+
     #set user's profile
     
     def set_user_skills(self, skills):
+        self.clear_user_facts()
         for skill in skills:
             self.prolog.assertz(f"has_skill({skill})")
 
     def set_user_traits(self, traits):
+        self.clear_user_facts()
         for trait in traits:
             self.prolog.assertz(f"has_trait({trait})")
 
     def set_user_interests(self, interests):
+        self.clear_user_facts()
         for interest in interests:
             self.prolog.assertz(f"has_interest({interest})")
 
     def set_user_education(self, education):
+        self.clear_user_facts()
         self.prolog.assertz(f"has_education({education})")
 
     #function to apply forward chaining 
@@ -32,11 +43,14 @@ class CareerAdvisor:
 
     #function to apply backward chaining
     def backward_chaining(self, career):
-        query = f"recommend({career})"
-        result = list(self.prolog.query(query))
-        return bool(result)
+        try:
+            query = f"recommend({career})"
+            result = list(self.prolog.query(query))
+            return bool(result)
+        except Exception as e:
+            print(f"Backward chaining error {career}: {e}")
 
-    # ---------- Hybrid recommendation ----------
+    # hybrid implementation
     def hybrid_recommendation(self):
         potential = self.forward_chaining()
         final_recommend = []
