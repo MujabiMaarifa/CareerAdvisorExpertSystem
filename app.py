@@ -5,20 +5,20 @@ st.set_page_config(page_title="Career Advisor Expert System", layout="wide")
 st.title("🎯 Career Advisor Expert System")
 st.info("Your career determines your future ...")
 
-# initialize the advisor
+# Initialize the advisor
 advisor = CareerAdvisor()
 
 # Sidebar
 st.sidebar.title("AI Logic")
-st.sidebar.info("Reason with the expert to find a suitable career.")
+st.sidebar.info("Reason with the expert to find your career.")
 st.sidebar.header("⚙ Reasoning Method")
 
 reasoning_method = st.sidebar.radio(
     "Choose reasoning method:",
     [
-        "Forward Chaining(Data Driven)",
-        "Backward Chaining(Goal Driven)",
-        "Hybrid(both)"
+        "Forward Chaining (Data Driven)",
+        "Backward Chaining (Goal Driven)",
+        "Hybrid (Both)"
     ]
 )
 
@@ -28,25 +28,17 @@ st.header("👤 Enter your profile")
 skills = st.multiselect(
     "Select your skills:",
     [
-        "programming",
-        "problem_solving",
-        "statistics",
-        "communication",
-        "medical_knowledge",
-        "teaching_explaining",
-        "drawing"
+        "programming", "problem_solving", "statistics",
+        "communication", "medical_knowledge",
+        "teaching_explaining", "drawing"
     ]
 )
 
 traits = st.multiselect(
     "Select your personality traits:",
     [
-        "logical",
-        "analytical",
-        "curious",
-        "caring",
-        "creative",
-        "detail_oriented",
+        "logical", "analytical", "curious",
+        "caring", "creative", "detail_oriented",
         "teaching"
     ]
 )
@@ -54,15 +46,9 @@ traits = st.multiselect(
 interests = st.multiselect(
     "Select your interests:",
     [
-        "technology",
-        "data_analysis",
-        "research",
-        "design",
-        "networks",
-        "security",
-        "teaching",
-        "house_planning",
-        "patient_care"
+        "technology", "data_analysis", "research",
+        "design", "networks", "security",
+        "teaching", "house_planning", "patient_care"
     ]
 )
 
@@ -71,23 +57,7 @@ education = st.selectbox(
     ["diploma", "bachelors", "masters", "phd"]
 )
 
-# Backward chaining goal selector (outside button)
-career_goal = None
-if reasoning_method.startswith("Backward"):
-    career_goal = st.selectbox(
-        "Career Goal:",
-        [
-            "software_engineer",
-            "data_scientist",
-            "teacher",
-            "architect",
-            "nurse",
-            "lawyer"
-        ]
-    )
-
 # Set user profile
-advisor.clear_user_facts()
 advisor.set_user_profile(
     skills=skills,
     traits=traits,
@@ -95,18 +65,32 @@ advisor.set_user_profile(
     education=education
 )
 
-# Reasoning button
+# Reasoning and recommendation
 if st.button("🔍 Get Career Recommendation", use_container_width=True):
     try:
-        if reasoning_method == "Forward Chaining(Data Driven)":
+        if reasoning_method == "Forward Chaining (Data Driven)":
             recommended = advisor.forward_chaining()
             method_used = "Forward Chaining"
 
-        elif reasoning_method == "Backward Chaining(Goal Driven)":
+        elif reasoning_method == "Backward Chaining (Goal Driven)":
+            st.subheader("🎯 Select a career to verify")
+            career_goal = st.selectbox(
+                "Career Goal:",
+                [
+                    "software_engineer",
+                    "data_scientist",
+                    "teacher",
+                    "architect",
+                    "nurse",
+                    "lawyer"
+                ]
+            )
+
             if advisor.backward_chaining(career_goal):
                 recommended = [career_goal]
             else:
                 recommended = []
+
             method_used = "Backward Chaining"
 
         else:  # Hybrid
@@ -116,15 +100,15 @@ if st.button("🔍 Get Career Recommendation", use_container_width=True):
         st.write(f"**Reasoning Method Used:** {method_used}")
 
         if recommended:
-            st.success("Recommended Careers:")
-            for c in recommended:
-                st.write(f"- {c.replace('_', ' ').title()}")
+            st.success("✅ Recommended Careers:")
+            for career in recommended:
+                st.write(f"- {career.replace('_', ' ').title()}")
         else:
             st.warning(
-                "No career fully matches your profile. "
-                "Try adding more skills, interests, or traits."
+                "⚠ No career fully matches your profile yet. "
+                "Try adjusting your skills, traits, or interests."
             )
 
     except Exception as e:
-        st.error(f"Reasoning error: {e}")
+        st.error(f"❌ Reasoning error: {e}")
         st.stop()

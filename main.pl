@@ -134,15 +134,17 @@ personality_fit(Career) :-
 
 /* education based filtering */
 education_fit(Career) :-
-    has_education(bachelors),
+    has_education(Level),
+    education_level(Level),
     career(Career).
+
 
 /* final recommendation rule */
 recommend(Career) :-
     strongly_qualified(Career),
-    interested_in(Career),
-    personality_fit(Career),
-    education_fit(Career).
+    education_fit(Career),
+    ( interested_in(Career) ; true ),
+    ( personality_fit(Career) ; true ).
 
 
 /* Skill to Interest Mapping  */
@@ -157,6 +159,11 @@ skill_interest_match(database_management, data_analysis).
 skill_interest_match(medical_knowledge, patient_care).
 skill_interest_match(drawing, house_planning).
 skill_interest_match(teaching_explaining, teach).
+skill_interest_match(communication, teaching).
+skill_interest_match(communication, patient_care).
+skill_interest_match(problem_solving, technology).
+skill_interest_match(critical_thinking, research).
+
 
 /* ---- Career to Trait Mapping ---- */
 career_trait(software_engineer, logical).

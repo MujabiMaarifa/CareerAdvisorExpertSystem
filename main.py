@@ -34,7 +34,7 @@ class CareerAdvisor:
         qualification = list(self.prolog.query("qualified(Career)"))
         for res in qualification:
             qualified.add(res["Career"])
-        return list(qualified)
+        return sorted(list(qualified))
 
     # Backward chaining
     def backward_chaining(self, career):
