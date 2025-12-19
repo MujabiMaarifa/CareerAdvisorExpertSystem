@@ -1,7 +1,7 @@
 /*dynamic facts*/
 :- dynamic inferred_qualified/1.
 :- dynamic qualified/1.
-%dynamicUserFacts
+%dynamicUserFacts -> asserrted at run time from python
 :- dynamic has_skill/1.
 :- dynamic has_interest/1.
 :- dynamic has_trait/1.
@@ -50,7 +50,7 @@ interest(research).
 interest(design).
 interest(networks).
 interest(security).
-interest(teaching).
+interest(teach).
 interest(house_planning).
 interest(patient_care).
 
@@ -103,7 +103,6 @@ requires(architect, house_planning).
 
 requires(teacher, communication).
 requires(teacher, critical_thinking).
-requires(teacher, logical).
 requires(teacher, teaching_explaining).
 
 %inferenceRules
@@ -146,7 +145,8 @@ recommend(Career) :-
     education_fit(Career).
 
 
-/* ---- Skill to Interest Mapping ---- */
+/* Skill to Interest Mapping  */
+ %skill_interest_match(skill, interest)
 skill_interest_match(programming, technology).
 skill_interest_match(statistics, data_analysis).
 skill_interest_match(machine_learning, research).
@@ -156,7 +156,7 @@ skill_interest_match(web_design, design).
 skill_interest_match(database_management, data_analysis).
 skill_interest_match(medical_knowledge, patient_care).
 skill_interest_match(drawing, house_planning).
-skill_interest_match(teaching_explaining, teaching).
+skill_interest_match(teaching_explaining, teach).
 
 /* ---- Career to Trait Mapping ---- */
 career_trait(software_engineer, logical).

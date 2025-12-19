@@ -27,9 +27,12 @@ class CareerAdvisor:
     # Forward chaining: career requires all skills
     def forward_chaining(self):
         qualified = set()
-        for res in self.prolog.query("strongly_qualified(Career)"):
+        qualifications = list(self.prolog.query("strongly_qualified(Career)"))
+        for res in qualifications:
             qualified.add(res["Career"])
-        for res in self.prolog.query("qualified(Career)"):
+
+        qualification = list(self.prolog.query("qualified(Career)"))
+        for res in qualification:
             qualified.add(res["Career"])
         return list(qualified)
 
